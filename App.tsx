@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { db, getFromLocalStorage, saveToLocalStorage, requestPersistence } from './db';
 import { ThemeMode, TestSettings, WordItem, AppThemeColor } from './types';
-import { SunIcon, MoonIcon, HomeIcon, BrushIcon } from './components/Icons';
-import Dashboard from './views/Dashboard';
-import ImportView from './views/ImportView';
-import SettingsView from './views/SettingsView';
-import TestSessionView from './views/TestSessionView';
-import ResultsView from './views/ResultsView';
+import { SunIcon, MoonIcon, HomeIcon, BrushIcon } from './components/Icons.tsx';
+import Dashboard from './views/Dashboard.tsx';
+import ImportView from './views/ImportView.tsx';
+import SettingsView from './views/SettingsView.tsx';
+import TestSessionView from './views/TestSessionView.tsx';
+import ResultsView from './views/ResultsView.tsx';
 
 const THEME_COLORS: Record<AppThemeColor, string> = {
   blue: '#3b82f6',
@@ -45,13 +45,15 @@ const App: React.FC = () => {
 
       await requestPersistence();
       try {
-        // Ensure the database instance is correctly opened before the app starts
-        // isOpen() is a method inherited from Dexie
-        if (!db.isOpen()) {
-          await db.open();
+        // Fix: Explicitly checking and opening the database connection.
+        // Cast to any is used to avoid issues where inherited members from Dexie are not visible.
+        const d: any = db;
+        if (!d.isOpen()) {
+          await d.open();
         }
         setIsDbReady(true);
       } catch (err) {
+        console.error('Database connection error:', err);
         setIsDbReady(true);
       }
     };
@@ -83,7 +85,9 @@ const App: React.FC = () => {
   if (!isDbReady) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="text-primary animate-pulse font-bold text-xl">Master Voc. yuklanmoqda...</div>
+        <div className="text-primary animate-pulse font-bold text-xl text-center">
+          Leksika yuklanmoqda...
+        </div>
       </div>
     );
   }
@@ -93,9 +97,9 @@ const App: React.FC = () => {
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 px-4 py-3 flex justify-between items-center">
         <div className="flex items-center gap-2 cursor-pointer group" onClick={() => setView('dashboard')}>
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
-            MV
+            L
           </div>
-          <h1 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100 italic">Master Voc.</h1>
+          <h1 className="text-xl font-black tracking-tight text-slate-800 dark:text-slate-100 italic">Leksika</h1>
         </div>
         
         <div className="flex items-center gap-1">
@@ -131,7 +135,7 @@ const App: React.FC = () => {
       </main>
 
       <footer className="p-4 text-center text-[10px] text-slate-400 dark:text-slate-600 border-t border-slate-100 dark:border-slate-800 uppercase tracking-widest font-bold">
-        Master Voc. &copy; {new Date().getFullYear()} • OFLAYN REJIM
+        Leksika &copy; {new Date().getFullYear()} • OFLAYN REJIM
       </footer>
     </div>
   );

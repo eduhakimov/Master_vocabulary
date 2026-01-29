@@ -3,14 +3,14 @@ import Dexie from 'dexie';
 import type { Table } from 'dexie';
 import { WordItem, TestHistory } from './types';
 
-// Use default import for Dexie to ensure proper class inheritance in TypeScript
+// Using default import for Dexie to ensure inheritance types are correctly resolved in this environment.
 export class LeksikaDatabase extends Dexie {
   words!: Table<WordItem>;
   history!: Table<TestHistory>;
 
   constructor() {
-    super('MasterVocDB');
-    // The version method is inherited from Dexie
+    super('LeksikaVocDB');
+    // Define database schema
     this.version(3).stores({
       words: '++id, en, uz, unit, category, mistakeCount',
       history: '++id, date, unitNames, correct, total, totalTime, avgTime'
@@ -30,13 +30,13 @@ export const requestPersistence = async () => {
 
 export const saveToLocalStorage = (key: string, data: any) => {
   try {
-    localStorage.setItem(`mastervoc_${key}`, JSON.stringify(data));
+    localStorage.setItem(`leksika_${key}`, JSON.stringify(data));
   } catch (e) {
     console.error('LocalStorage error', e);
   }
 };
 
 export const getFromLocalStorage = (key: string) => {
-  const item = localStorage.getItem(`mastervoc_${key}`);
+  const item = localStorage.getItem(`leksika_${key}`);
   return item ? JSON.parse(item) : null;
 }
