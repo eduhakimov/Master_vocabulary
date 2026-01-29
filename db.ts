@@ -1,16 +1,16 @@
 
-import { Dexie } from 'dexie';
+import Dexie from 'dexie';
 import type { Table } from 'dexie';
 import { WordItem, TestHistory } from './types';
 
-// Fix: Use named import { Dexie } to ensure the class is correctly recognized for inheritance in all environments.
+// Use default import for Dexie to ensure the class is correctly recognized for inheritance in all environments.
 export class LeksikaDatabase extends Dexie {
   words!: Table<WordItem>;
   history!: Table<TestHistory>;
 
   constructor() {
     super('LeksikaVocDB');
-    // Fix: this.version is a method inherited from the Dexie base class.
+    // Initialize version and stores using the inherited version method from Dexie.
     this.version(3).stores({
       words: '++id, en, uz, unit, category, mistakeCount',
       history: '++id, date, unitNames, correct, total, totalTime, avgTime'

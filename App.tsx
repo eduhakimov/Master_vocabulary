@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
       await requestPersistence();
       try {
-        // Fix: isOpen() and open() are methods inherited from the Dexie base class via LeksikaDatabase.
+        // Correctly call isOpen() and open() methods inherited from Dexie.
         if (!db.isOpen()) {
           await db.open();
         }
@@ -102,7 +102,7 @@ const App: React.FC = () => {
         
         <div className="flex items-center gap-1">
           <div className="relative">
-            <button onClick={() => setIsColorPickerOpen(!isColorPickerOpen)} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500">
+            <button onClick={() => setIsColorPickerOpen(!isColorPickerOpen)} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 flex items-center justify-center">
               <BrushIcon />
             </button>
             {isColorPickerOpen && (
@@ -114,11 +114,11 @@ const App: React.FC = () => {
             )}
           </div>
           {view !== 'dashboard' && (
-            <button onClick={() => setView('dashboard')} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500">
+            <button onClick={() => setView('dashboard')} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 flex items-center justify-center">
               <HomeIcon />
             </button>
           )}
-          <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500">
+          <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 flex items-center justify-center">
             {theme === 'light' ? <MoonIcon /> : <SunIcon />}
           </button>
         </div>
