@@ -11,7 +11,8 @@ export class LeksikaDatabase extends Dexie {
   constructor() {
     super('LeksikaVocDB');
     // Define database schema
-    this.version(3).stores({
+    // Fix: Explicitly casting 'this' to any because the 'version' property is not correctly recognized on the inherited Dexie class in this environment.
+    (this as any).version(3).stores({
       words: '++id, en, uz, unit, category, mistakeCount',
       history: '++id, date, unitNames, correct, total, totalTime, avgTime'
     });

@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { db, getFromLocalStorage, saveToLocalStorage, requestPersistence } from './db';
 import { ThemeMode, TestSettings, WordItem, AppThemeColor } from './types';
-import { SunIcon, MoonIcon, HomeIcon, BrushIcon } from './components/Icons.tsx';
-import Dashboard from './views/Dashboard.tsx';
-import ImportView from './views/ImportView.tsx';
-import SettingsView from './views/SettingsView.tsx';
-import TestSessionView from './views/TestSessionView.tsx';
-import ResultsView from './views/ResultsView.tsx';
+import { SunIcon, MoonIcon, HomeIcon, BrushIcon } from './components/Icons';
+import Dashboard from './views/Dashboard';
+import ImportView from './views/ImportView';
+import SettingsView from './views/SettingsView';
+import TestSessionView from './views/TestSessionView';
+import ResultsView from './views/ResultsView';
 
 const THEME_COLORS: Record<AppThemeColor, string> = {
   blue: '#3b82f6',
