@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { db, getFromLocalStorage, saveToLocalStorage, requestPersistence } from './db';
 import { ThemeMode, TestSettings, WordItem, AppThemeColor } from './types';
@@ -44,11 +45,9 @@ const App: React.FC = () => {
 
       await requestPersistence();
       try {
-        // Fix: Explicitly checking and opening the database connection.
-        // Cast to any is used to avoid issues where inherited members from Dexie are not visible.
-        const d: any = db;
-        if (!d.isOpen()) {
-          await d.open();
+        // Fix: isOpen() and open() are methods inherited from the Dexie base class via LeksikaDatabase.
+        if (!db.isOpen()) {
+          await db.open();
         }
         setIsDbReady(true);
       } catch (err) {
