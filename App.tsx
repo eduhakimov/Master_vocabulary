@@ -45,7 +45,8 @@ const App: React.FC = () => {
 
       await requestPersistence();
       try {
-        // Fix: Use the inherited Dexie methods isOpen() and open()
+        // Ensure the database instance is correctly opened before the app starts
+        // isOpen() is a method inherited from Dexie
         if (!db.isOpen()) {
           await db.open();
         }
