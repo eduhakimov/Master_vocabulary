@@ -1,16 +1,16 @@
 
-import Dexie from 'dexie';
+import { Dexie } from 'dexie';
 import type { Table } from 'dexie';
 import { WordItem, TestHistory } from './types';
 
-// Use the default export for Dexie to ensure LeksikaDatabase correctly inherits all methods like version(), open(), and isOpen()
+// Use named import for Dexie to ensure class inheritance and methods are correctly typed
 export class LeksikaDatabase extends Dexie {
   words!: Table<WordItem>;
   history!: Table<TestHistory>;
 
   constructor() {
     super('MasterVocDB');
-    // version() is a core method of the Dexie class
+    // Using version method inherited from Dexie
     this.version(3).stores({
       words: '++id, en, uz, unit, category, mistakeCount',
       history: '++id, date, unitNames, correct, total, totalTime, avgTime'

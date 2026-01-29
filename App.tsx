@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
       await requestPersistence();
       try {
-        // Now that db.ts is fixed, isOpen() and open() are correctly recognized as methods inherited from Dexie
+        // Fix: Use the inherited Dexie methods isOpen() and open()
         if (!db.isOpen()) {
           await db.open();
         }
